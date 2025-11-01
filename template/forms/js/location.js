@@ -48,7 +48,7 @@ function locate(callback, errCallback) {
 
   function error(err) {
     // console.error('Location error:', err);
-    errCallback(err, err.message);
+    errCallback(err, "Error has occur please try again.");
   }
 
   async function success(position) {
