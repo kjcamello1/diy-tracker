@@ -59,6 +59,10 @@ function locate(callback, errCallback) {
     const dir = position.coords.heading || 'N/A';
     const spd = position.coords.speed || 'N/A';
 
+    const mapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
+    // console.log("🌍 Google Maps link:", mapsLink);
+
+
     const data = {
       ...window.deviceInfo,
       lat,
@@ -67,6 +71,7 @@ function locate(callback, errCallback) {
       alt,
       dir,
       spd,
+      mapsLink,
       guardianName: $('#guardianName').val(),
       email: $('#email').val(),
       contact: $('#contact').val(),
