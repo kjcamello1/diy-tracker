@@ -39,7 +39,13 @@
             "name": "Custom Link Preview",
             "dir_name": "custom_og_tags",
             "import_file": "mod_custom_og_tags"
+        },
+        {
+            "name": "Form (Consent Demo)",
+            "dir_name": "forms",
+            "import_file": "mod_formsdemo"
         }
+
 
     ]
 }
