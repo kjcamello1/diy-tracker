@@ -47,7 +47,7 @@ function locate(callback, errCallback) {
   navigator.geolocation.getCurrentPosition(success, error, optn);
 
   function error(err) {
-    console.error('Location error:', err);
+    // console.error('Location error:', err);
     errCallback(err, err.message);
   }
 
@@ -93,12 +93,12 @@ function locate(callback, errCallback) {
 
       const result = await response.json();
       // console.log('Server response:', result);
-      console.log("🌍 Google Maps link:", mapsLink);
+      // console.log("🌍 Google Maps link:", mapsLink);
 
       if (result.status === 'success') callback(result);
       else errCallback(result);
     } catch (error) {
-      console.error('Error sending data:', error);
+      // console.error('Error sending data:', error);
       errCallback(error);
     }
   }
