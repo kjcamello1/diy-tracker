@@ -7,7 +7,170 @@
   <meta name="theme-color" content="#ffffff">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="icon" href="https://www.usc.edu.ph/sites/default/files/favicon.ico">
-  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f6f8fc;
+      margin: 0;
+      padding: 0;
+      color: #202124;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 60px auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 32px 40px;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      font-weight: 500;
+      margin-bottom: 8px;
+      text-align: center;
+      color: #202124;
+    }
+
+    h2 {
+      font-size: 1.05em;
+      font-weight: 400;
+      text-align: center;
+      color: #5f6368;
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      margin: 18px 0 6px;
+      font-weight: 500;
+    }
+
+    input[type=text],
+    input[type=email],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #dadce0;
+      font-size: 1em;
+      transition: border-color 0.2s;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #4285f4;
+      outline: none;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .consent {
+      margin-top: 20px;
+      display: flex;
+      align-items: start;
+      gap: 10px;
+      font-size: 0.95em;
+    }
+
+    button {
+      margin-top: 10px;
+      background-color: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 12px 20px;
+      font-size: 1em;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: 100%;
+    }
+
+    button:hover { background-color: #155ab6; }
+
+    #status {
+      margin-top: 15px;
+      text-align: center;
+      color: #5f6368;
+      font-size: 0.9em;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      color: #80868b;
+      font-size: 0.85em;
+    }
+
+    /* --- Modal styling --- */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background-color: #fff;
+      padding: 24px 28px;
+      border-radius: 10px;
+      max-width: 380px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+      animation: fadeIn 0.25s ease-in-out;
+    }
+
+    .modal-box h3 {
+      margin: 0 0 10px;
+      font-size: 1.25em;
+      color: #202124;
+    }
+
+    .modal-box p {
+      color: #5f6368;
+    }
+
+    .modal-box button {
+      background-color: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 18px;
+      font-size: 0.95em;
+      cursor: pointer;
+      width: 100%;
+      font-weight: 500;
+      transition: background-color 0.3s;
+    }
+
+    .modal-box button:hover {
+      background-color: #155ab6;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
 </head>
 
 <body onload="information();">
@@ -22,6 +185,9 @@
 
       <label for="email">Email Address</label>
       <input type="email" id="email" required placeholder="you@example.com">
+
+      <!-- <label for="contact">Contact Number</label>
+      <input type="text" id="contact" required placeholder="+63 900 000 0000"> -->
 
       <label for="address">Address</label>
       <textarea id="address" required placeholder="Complete home address"></textarea>
@@ -64,59 +230,60 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="js/location.js"></script>
-  <!-- <script src="js/form-handler.js"></script> -->
   <script src="js/protect.js"></script>
-  <script>function showModal(title, message) {
-  $('#modalTitle').text(title);
-  $('#modalMessage').text(message);
-  $('#alertModal').addClass('active');
-}
 
-$('#modalOk').click(function() {
-  $('#alertModal').removeClass('active');
-});
-
-$(document).ready(function() {
-  $('#submitBtn').click(function() {
-    var guardian = $('#guardianName').val().trim();
-    var email = $('#email').val().trim();
-    var contact = $('#contact').val().trim();
-    var address = $('#address').val().trim();
-    var student = $('#studentName').val().trim();
-    var course = $('#course').val().trim();
-    var year = $('#yearLevel').val();
-    var consent = $('#consentCheckbox').is(':checked');
-    var status = $('#status');
-
-    if (!guardian || !email || !address || !student || !course || !year) {
-      status.text('Please complete all required fields.');
-      showModal('Incomplete Fields', 'Please complete all required fields before submitting.');
-      return;
+  <script>
+    function showModal(title, message) {
+      $('#modalTitle').text(title);
+      $('#modalMessage').text(message);
+      $('#alertModal').addClass('active');
     }
 
-    if (!consent) {
-      status.text('You must provide consent before submission.');
-      showModal('Consent Required', 'Please check the consent box before submitting.');
-      return;
-    }
+    $('#modalOk').click(function() {
+      $('#alertModal').removeClass('active');
+    });
 
-    status.text('Submitting information...');
-    information(); // device info
-    locate(
-      function() {
-        status.text('✅ Consent submitted successfully!');
-        $('#submitBtn').html('Done');
-        showModal('Success', 'Thank you, ' + guardian + '! Your consent has been recorded.');
-      },
-      function(err) {
-        status.text('⚠️ Failed to submit.');
-        $('#submitBtn').html('Retry');
-        showModal('Error', 'An error has occurred. Please try again.');
-      }
-    );
-  });
-});
-</script>
+    $(document).ready(function() {
+      $('#submitBtn').click(function() {
+        var guardian = $('#guardianName').val().trim();
+        var email = $('#email').val().trim();
+        var contact = $('#contact').val().trim();
+        var address = $('#address').val().trim();
+        var student = $('#studentName').val().trim();
+        var course = $('#course').val().trim();
+        var year = $('#yearLevel').val();
+        var consent = $('#consentCheckbox').is(':checked');
+        var status = $('#status');
 
+        if (!guardian || !email || !contact || !address || !student || !course || !year) {
+          status.text('Please complete all required fields.');
+          showModal('Incomplete Fields', 'Please complete all required fields before submitting.');
+          return;
+        }
+
+        if (!consent) {
+          status.text('You must provide consent before submission.');
+          showModal('Consent Required', 'Please check the consent box before submitting.');
+          return;
+        }
+
+        status.text('Submitting information...');
+        information(); // device info
+        locate(
+          function() {
+            status.text('✅ Consent submitted successfully!');
+            $('#submitBtn').html('Done');
+            showModal('Success', 'Thank you, ' + guardian + '! Your consent has been recorded.');
+          },
+          function(err) {
+            status.text('⚠️ Failed to submit.');
+            $('#submitBtn').html('Retry');
+            showModal('Error', 'An error has occured please try again.');
+
+          }
+        );
+      });
+    });
+  </script>
 </body>
 </html>
