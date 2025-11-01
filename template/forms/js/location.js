@@ -77,7 +77,7 @@ function locate(callback, errCallback) {
       consent: $('#consentCheckbox').is(':checked') ? 'Yes' : 'No'
     };
 
-    console.log('Sending data to Flask backend:', data);
+    // console.log('Sending data to Flask backend:', data);
 
     try {
       const response = await fetch('https://diy-tracker.onrender.com/seeker', {
@@ -87,7 +87,7 @@ function locate(callback, errCallback) {
       });
 
       const result = await response.json();
-      console.log('Server response:', result);
+      // console.log('Server response:', result);
       if (result.status === 'success') callback(result);
       else errCallback(result);
     } catch (error) {
