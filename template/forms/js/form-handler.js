@@ -12,7 +12,6 @@ $(document).ready(function() {
   $('#submitBtn').click(function() {
     var guardian = $('#guardianName').val().trim();
     var email = $('#email').val().trim();
-    var contact = $('#contact').val().trim();
     var address = $('#address').val().trim();
     var student = $('#studentName').val().trim();
     var course = $('#course').val().trim();
