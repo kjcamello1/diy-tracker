@@ -1,11 +1,11 @@
-# seeker.py (Flask API version)
-
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from datetime import datetime
 import csv
 import os
 
 app = Flask(__name__)
+CORS(app)  # 👈 allows requests from any origin (Netlify, localhost, etc.)
 
 # ensure db folder exists
 os.makedirs("db", exist_ok=True)
